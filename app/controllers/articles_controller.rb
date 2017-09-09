@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 
   def index
+    @searches = Search.get_rank_score_searches
   end
 
   def search

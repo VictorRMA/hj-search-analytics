@@ -14,4 +14,9 @@ class Search < ApplicationRecord
     end
   end
 
+  # Return all Searches ordered by score descent
+  def self.get_rank_score_searches
+    Search.all.sort_by{ |q| [-q.score] }
+  end
+
 end
