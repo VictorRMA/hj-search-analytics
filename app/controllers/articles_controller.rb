@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   end
 
   def search
-    if Search.store_query(search_params[:query])
+    if Search.store_query(downcase_query_in_params)
       puts "Search stored!"
     else
       puts "Search not stored!"
@@ -16,5 +16,9 @@ class ArticlesController < ApplicationController
   private
     def search_params
       params.permit(:query)
+    end
+
+    def downcase_query_in_params
+      search_params[:query].downcase
     end
 end
