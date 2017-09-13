@@ -1,22 +1,15 @@
 class Search < ApplicationRecord
   validates :query, presence: true
 
-  # Create or update Search instance based on query uniqueness
-  # return search instance
+  # Use escopos ao invés de métodos estáticos
+  # quando retornar um conjunto de registros (ActiveRecord::Relation)
+  scope :ordered, -> { order(score: :desc) }
+
+  # Find or create by tira a necessidade do if
+  # increment inicializa o campo com zero, se for nil.
   def self.store_query(query)
-    search = Search.find_by(query: query)
-
-    if search
-      Search.increment_counter(:score, search)
-      search
-    else
-      Search.create(query: query)
-    end
+    Search.find_or_create_by(query: query).increment(:score).save
   end
 
-  # Return all Searches ordered by score descent
-  def self.get_rank_score_searches
-    Search.all.sort_by{ |q| [-q.score] }
-  end
 
 end

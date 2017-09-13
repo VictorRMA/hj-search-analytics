@@ -1,30 +1,43 @@
 class ArticlesController < ApplicationController
 
   def index
-    @searches = Search.get_rank_score_searches
-  end
-
-  def search
-    if Search.store_query(downcase_query_in_params)
-        puts "Stored!"
-    else
-        puts "Search not stored!"
-    end
-
+    Search.store_query(query) if query.present?
     respond_to do |format|
-       format.json { redirect_to root_path }
-       format.js { redirect_to root_path }
-       format.html { redirect_to root_path }
+       format.html { render locals: { searches: searches} }
+       format.js { render locals: { searches: searches} }
+       format.json { render json: searches_as_json }
     end
-    #redirect_to root_path
   end
 
+  # nao identa isso pelo amor de deus kkkkkk
   private
-    def search_params
-      params.permit(:query)
-    end
 
-    def downcase_query_in_params
-      search_params[:query].downcase
+  # nao precisa do require porque voce so passa um parametro especifico
+  # strong parameters e pra quando voce passa uma lista de parametros
+  # e quer fazer whitelist de somente alguns (nao e o caso)
+  def query
+    params[:query]
+  end
+
+  def searches
+    ordered_searches = Search.ordered
+    if query.present?
+      ordered_searches.where(query: query)
+    else
+      ordered_searches
     end
+  end
+
+  def searches_as_json
+    {
+      success: true,
+      searches: searches.map do |search|
+        {
+          id: search.id,
+          query: search.query,
+          score: search.score
+        }
+      end
+    }
+  end
 end

@@ -3,6 +3,12 @@
     <%= render 'searchbar' %>
   </div>
   <div class="col-xs-12 col-sm-3 col-md-4 analytics-sidebar">
-    <%= render 'analytics' %>
+    <h1>Search analytics</h1>
+
+    <ul class="list-group">
+      <div id="analytics">
+        <%= render partial: 'items', locals: { searches: searches } %>
+      </div>
+    </ul>
   </div>
 </div>
