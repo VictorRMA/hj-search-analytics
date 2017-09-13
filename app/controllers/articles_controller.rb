@@ -6,12 +6,17 @@ class ArticlesController < ApplicationController
 
   def search
     if Search.store_query(downcase_query_in_params)
-      puts "Search stored!"
+        puts "Stored!"
     else
-      puts "Search not stored!"
+        puts "Search not stored!"
     end
 
-    redirect_to root_path
+    respond_to do |format|
+       format.json { redirect_to root_path }
+       format.js { redirect_to root_path }
+       format.html { redirect_to root_path }
+    end
+    #redirect_to root_path
   end
 
   private
