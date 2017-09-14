@@ -1,25 +1,22 @@
 class ArticlesController < ApplicationController
 
   def index
-    @searches = Search.get_rank_score_searches
-  end
+    Search.store_query(query) if query.present?
 
-  def search
-    if Search.store_query(downcase_query_in_params)
-      puts "Search stored!"
-    else
-      puts "Search not stored!"
+    respond_to do |format|
+      format.html { render locals: { searches: searches } }
+      format.js { render locals: { searches: searches } }
     end
-
-    redirect_to root_path
   end
 
   private
-    def search_params
-      params.permit(:query)
-    end
 
-    def downcase_query_in_params
-      search_params[:query].downcase
-    end
+  def query
+    params[:query]
+  end
+
+  def searches
+    Search.ordered
+  end
+
 end

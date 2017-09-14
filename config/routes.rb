@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   root 'articles#index'
 
-  get 'search_articles', to: 'articles#search'
+  resources :articles, only: [:index]
+
 end

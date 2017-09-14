@@ -1,12 +1,7 @@
-<h1>Search analytics</h1>
-
-<ul class="list-group">
-  <% @searches.each do |search| %>
-
+<% searches.each do |search| %>
   <li class="list-group-item">
     <%= search.query %>
     <span class="badge"><%= search.score %></span>
   </li>
+<% end %>
 
-  <% end %>
-</ul>

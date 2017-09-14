@@ -1,13 +1,13 @@
-<%= form_tag search_articles_path, method: :get do %>
+<%= form_with url: articles_path, method: :get, id: 'query-form' do %>
 <div class="form-group row">
   <div class="col-xs-12 col-sm-8 col-md-10">
-    <%= text_field_tag :query, params[:query], placeholder: "How can we help you?", autofocus: true,
+    <%= text_field_tag :query, nil, placeholder: "How can we help you?", autofocus: true,
     class: 'form-control search-box input-lg' %>
   </div>
 
   <div class="col-xs-12 col-sm-4 col-md-2">
     <%= button_tag(type: :submit, class: "btn btn-lg") do %>
-    <span class="glyphicon glyphicon-search"></span>
+      <span class="glyphicon glyphicon-search"></span>
     <% end %>
   </div>
 </div>
