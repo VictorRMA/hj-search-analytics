@@ -9,6 +9,11 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def clear
+    Search.delete_all
+    redirect_to root_path
+  end
+
   private
 
   def query

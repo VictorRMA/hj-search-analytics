@@ -10,5 +10,7 @@
         <%= render partial: 'items', locals: { searches: searches } %>
       </div>
     </ul>
+    <%= link_to 'Clear stats', clear_path, data: { confirm: "Are you sure?" },
+                                           class: "btn btn-danger" %>
   </div>
 </div>
