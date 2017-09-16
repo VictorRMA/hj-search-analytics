@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170909000642) do
+ActiveRecord::Schema.define(version: 20170916135042) do
 
   create_table "searches", force: :cascade do |t|
     t.string "query"
-    t.integer "score", default: 1
+    t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
